@@ -2,42 +2,43 @@ package main
 
 import (
 	"fmt"
-	"strconv"
+	"sync"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 func main() {
-	var x int
-	x = 8
-	y := 7
+	wg := &sync.WaitGroup{}
+	c := make(chan string)
 
-	fmt.Println(x)
-	fmt.Println(y)
+	wg.Add(2)
+	go generateId(wg, c)
+	go receiveId(wg, c)
 
-	myValue, err := strconv.ParseInt("NaN", 0, 64)
-	if err != nil {
-		fmt.Println("%v\n", err)
-	} else {
-		fmt.Println(myValue)
-	}
-
-	m := make(map[string]int)
-	m["key"] = 6
-	fmt.Println(m["key"])
-
-	s := []int{1, 2, 3}
-	s = append(s, 6)
-	for index, value := range s {
-		fmt.Println(index)
-		fmt.Println(value)
-	}
-	c := make(chan int)
-	go doSomenthing(c)
-	<-c
+	wg.Wait()
 }
 
-func doSomenthing(c chan int) {
-	time.Sleep(3 * time.Second)
-	fmt.Println("Done")
-	c <- 1
+func generateId(wg *sync.WaitGroup, c chan string) {
+	fmt.Println("Generando id...")
+	id := uuid.New()
+	sleepSeconds(3)
+	fmt.Printf("El id generado es -> %s \n", id)
+	sleepSeconds(1)
+	fmt.Println("Enviando...")
+	sleepSeconds(1)
+	c <- id.String()
+	wg.Done()
+}
+
+func receiveId(wg *sync.WaitGroup, idChan chan string) {
+	id := <-idChan
+	fmt.Println("Recibido")
+	sleepSeconds(1)
+	fmt.Printf("El id recibido es -> %s", id)
+	wg.Done()
+}
+
+func sleepSeconds(number time.Duration) {
+	time.Sleep(number * time.Second)
 }
