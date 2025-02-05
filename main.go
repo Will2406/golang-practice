@@ -26,6 +26,11 @@ func main() {
 	fmt.Println(car)
 	fmt.Println(*car2)
 
+	motorcycle := Motorcycle{}
+	motorcycle.id = 1
+	motorcycle.speed = 78
+	motorcycle.Start()
+
 	wg.Wait()
 }
 
