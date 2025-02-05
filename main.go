@@ -12,31 +12,29 @@ func main() {
 	wg := &sync.WaitGroup{}
 	c := make(chan string)
 
-	wg.Add(3)
+	wg.Add(2)
 	go generateId(wg, c)
 	go receiveId(wg, c)
-	go generateIdFake(wg, c)
+
+	car := Car{
+		id:    1,
+		name:  "name",
+		brand: false,
+	}
+
+	car2 := NewCar(2, "default", true)
+	fmt.Println(car)
+	fmt.Println(*car2)
 
 	wg.Wait()
 }
 
 func generateId(wg *sync.WaitGroup, c chan<- string) {
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 2; i++ {
 		id := uuid.New()
-		sleepSeconds(2)
 		c <- fmt.Sprintf("%d. %s orginal \n", i, id)
 	}
-	wg.Done()
-}
-
-func generateIdFake(wg *sync.WaitGroup, c chan<- string) {
-	for i := 0; i < 45; i++ {
-		id := uuid.New()
-		sleepSeconds(1)
-
-		c <- fmt.Sprintf("%d. %s fake \n", i, id)
-	}
-
+	close(c)
 	wg.Done()
 }
 
