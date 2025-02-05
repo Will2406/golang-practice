@@ -31,6 +31,12 @@ func main() {
 	motorcycle.speed = 78
 	motorcycle.Start()
 
+	dog := Dog{name: "bobby"}
+	person1 := Person{name: "Daniel", age: 12}
+
+	GetMessage(dog)
+	GetMessage(person1)
+
 	wg.Wait()
 }
 
