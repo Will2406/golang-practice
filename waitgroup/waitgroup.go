@@ -25,11 +25,12 @@ func main() {
 }
 
 func Worker(name string, work string, wg *sync.WaitGroup) {
+	defer wg.Done()
 
 	fmt.Printf("El trabajador %s comenzo a %s \n", name, work)
 	for i := 0; i < 10; i++ {
 		fmt.Printf("El trabajo '%s' el proceso es %d/10\n", work, i+1)
 		time.Sleep(50 * time.Millisecond)
 	}
-	wg.Done()
+
 }
