@@ -68,9 +68,9 @@ func GetComputerFactory(name string) (IProduct, error) {
 	return nil, fmt.Errorf("Invalid computer type")
 }
 
-func main() {
+/*func main() {
 	newComputerType := "Desktop"
 	computer, _ := GetComputerFactory(newComputerType)
 
 	fmt.Println(computer.getName())
-}
+}*/
