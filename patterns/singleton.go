@@ -28,7 +28,7 @@ func getDatabaseInstance() *Database {
 	return db
 }
 
-func main() {
+/*func main() {
 	var wg sync.WaitGroup
 
 	for i := 0; i < 5; i++ {
@@ -39,4 +39,4 @@ func main() {
 		}()
 	}
 	wg.Wait()
-}
+}*/
