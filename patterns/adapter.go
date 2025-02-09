@@ -41,5 +41,6 @@ func main() {
 		bankPayment: BankPayment{},
 		bankAccount: 123213,
 	}
+
 	ProcessPayment(bank)
 }
